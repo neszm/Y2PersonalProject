@@ -1,0 +1,58 @@
+Git host url: https://github.com/neszm/Y2PersonalProject
+
+Background and Objectives
+Background and motivation for the project was based on my passion for machine learning algorithms, so this project showcases deep learning’s effectiveness under 50 lines of code on the MNIST and Fashion MNIST datasets. 
+The objective of the project is to show how deep learning can achieve 90%+ accuracies even with little knowledge while rivaling more complex models. Throughout the project I also explored more about the workings of Convolutional Neural Networks and Neural Networks through filter activations and kernel visualizations.
+
+Technical Design and Implementation
+Data architecture
+Uses keras’ built in datasets: MNIST, fashion MNIST. These 2 datasets are 28 by 28 pixel images showing handwritten numbers and fashion items respectively (such as jackets, boots etc.). The datasets include 60000 training and 10000 testing images for the MNIST dataset with the fashion MNIST having a similar split between training and testing images.
+
+Dependencies
+•	Matplotlib
+•	Tensorflow
+•	Seaborn
+•	numpy
+
+Dataflow
+-Load in the raw data by using mnist.load_data() / fashion_mnist.load_data()
+-Using seaborn and matplotlib show visualizations about the datasets
+-Normalize the data by dividing by 255
+-Train the models and output their scores through various
+-Visualize training history
+-Visualize extras such as kernels, fashion MNIST training, ambiguous images
+
+Model design
+2 models:
+
+A simple dense model with 3 layers:
+Flatten(28x28)
+Dense(128, Relu activation)
+Dense(10, softmax activation)
+
+A simple convolutional neural network:
+
+Reshape(28,28,1)
+Conv2D(32, 3x3, Relu activation)
+MaxPool2D(2x2)
+Flatten
+Dense(10, softmax activation)
+
+Design choice
+The dense network achieves 98% accuracy with a single hidden layer to keep it easily interpretable. I also decided to use 128 units to avoid overfitting.
+The convolutional neural network uses spatial structure to achieve similar results with fewer parameters.
+Both models use “Adam” optimizer, optimizing for “accuracy” with the loss metric being “sparse categorical crossentrophy” for both. 
+I have decided to use them as it helps the dense model to converge faster, and I kept them in the CNN for fair comparison.
+
+Output
+Training histories plotted with various training times (5,15, 20 epochs), prediction tests, Convolutional Neural Networks’ top filters “kernels”, fashion MNIST’s ambiguous cases showcased.
+
+Results and Evaluation
+The dense model achieved training accuracies around 98.7% after 5 epochs on MNIST, while the CNN model reached 90% but with better stability on validation data. After training for 15 epoch the dense model achieved approximately 94% accuracy, and the CNN model reached around 92% accuracy.
+On Fashion MNIST, both models hit approximately 80-85% accuracy after 20 epochs, with the CNN showing smoother convergence and less fluctuation due to its spatial feature extraction. 
+These results align with established benchmarks: Keras' official "Simple MNIST convnet" (two Conv2D layers + Dense layer) achieves 99.25% test accuracy after 12 epochs (fchollet, 2020), while simpler single Conv2D CNNs like Stefan Fiott's model reach 98.39% on MNIST (Fiott, 2018). 
+On Fashion MNIST, PyImageSearch's CNN tutorial attains 93% test accuracy (Rosebrock, 2022), and Luiz Comanescu's optimized CNN hits 91.44% validation accuracy (Comanescu, 2025), which is in line with my findings.
+
+Discussion and Future Work
+Simple networks proved highly effective for MNIST, demonstrating deep learning's power with minimal setup, but Fashion MNIST highlighted limitations in handling visual similarities. Key insights are normalization's impact on convergence and longer training reducing variance without overfitting. The functional API enabled deeper interpretability through activations, unlike Sequential models.
+Future enhancements could add dropout layers to make the networks more robust against fluctuations, incorporate multiple Conv2D blocks for higher (99%+ MNIST) accuracy, or apply data augmentation for Fashion MNIST. Experimenting with transfer learning from pre-trained models (such as EfficientNet or ResNet) or advanced optimizers (like RMSprop) would also be able to boost performance. Adding more layers would also increase overall performance.
